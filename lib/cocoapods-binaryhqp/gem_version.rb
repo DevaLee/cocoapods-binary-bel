@@ -1,3 +1,3 @@
-module CocoapodsBinary
+module CocoapodsBinaryHqp
     VERSION = "0.4.4"
 end

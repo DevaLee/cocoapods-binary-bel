@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SnapKit
+
 
 class ViewController: UIViewController {
 
@@ -14,6 +16,20 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
+        
+        
+        let btn = UIButton()
+        btn.backgroundColor = .red
+        
+        view.addSubview(btn)
+        
+        btn.snp.makeConstraints { make in
+            make.left.equalToSuperview().inset(100)
+            make.top.equalToSuperview().inset(100)
+            make.width.height.equalTo(100)
+        }
+        
+        
     }
 
 

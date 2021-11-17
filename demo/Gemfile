@@ -2,7 +2,7 @@
 source "https://rubygems.org"
 
 gem 'cocoapods'
-gem 'cocoapods-binary',:path => "../"
+gem 'cocoapods-binaryhqp',:path => "../"
 gem 'xcpretty'
 gem 'ruby-debug-ide'
 gem 'debase', '~> 0.2.5.beta2'

@@ -1,7 +1,7 @@
 require 'fourflusher'
 require 'xcpretty'
 
-CONFIGURATION = "Release"
+CONFIGURATION = "Debug"
 PLATFORMS = { 'iphonesimulator' => 'iOS',
               'appletvsimulator' => 'tvOS',
               'watchsimulator' => 'watchOS' }
@@ -71,35 +71,35 @@ def build_for_iosish_platform(sandbox,
     simulator_header = File.read(simulator_generated_swift_header_path)
     # https://github.com/Carthage/Carthage/issues/2718#issuecomment-473870461
     combined_header_content = %Q{
-#if TARGET_OS_SIMULATOR // merged by cocoapods-binary
+#if TARGET_OS_SIMULATOR // merged by cocoapods-binaryhqp
 
 #{simulator_header}
 
-#else // merged by cocoapods-binary
+#else // merged by cocoapods-binaryhqp
 
 #{device_header}
 
-#endif // merged by cocoapods-binary
+#endif // merged by cocoapods-binaryhqp
 }
     File.write(device_generated_swift_header_path, combined_header_content.strip)
   end
 
-  # handle the dSYM files
-  device_dsym = "#{device_framework_path}.dSYM"
-  if File.exist? device_dsym
-    # lipo the simulator dsym
-    simulator_dsym = "#{simulator_framework_path}.dSYM"
-    if File.exist? simulator_dsym
-      tmp_lipoed_binary_path = "#{output_path}/#{module_name}.draft"
-      lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{device_dsym}/Contents/Resources/DWARF/#{module_name} #{simulator_dsym}/Contents/Resources/DWARF/#{module_name}`
-      puts lipo_log unless File.exist?(tmp_lipoed_binary_path)
-      FileUtils.mv tmp_lipoed_binary_path, "#{device_framework_path}.dSYM/Contents/Resources/DWARF/#{module_name}", :force => true
-    end
-    # move
-    FileUtils.mv device_dsym, output_path, :force => true
-  end
+  # # handle the dSYM files
+  # device_dsym = "#{device_framework_path}.dSYM"
+  # if File.exist? device_dsym
+  #   # lipo the simulator dsym
+  #   simulator_dsym = "#{simulator_framework_path}.dSYM"
+  #   if File.exist? simulator_dsym
+  #     tmp_lipoed_binary_path = "#{output_path}/#{module_name}.draft"
+  #     lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{device_dsym}/Contents/Resources/DWARF/#{module_name} #{simulator_dsym}/Contents/Resources/DWARF/#{module_name}`
+  #     puts lipo_log unless File.exist?(tmp_lipoed_binary_path)
+  #     FileUtils.mv tmp_lipoed_binary_path, "#{device_framework_path}.dSYM/Contents/Resources/DWARF/#{module_name}", :force => true
+  #   end
+  #   # move
+  #   FileUtils.mv device_dsym, output_path, :force => true
+  # end
 
-  # output
+  # # output
   output_path.mkpath unless output_path.exist?
   FileUtils.mv device_framework_path, output_path, :force => true
 

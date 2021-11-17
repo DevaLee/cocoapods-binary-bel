@@ -1,12 +1,18 @@
 platform :ios, '9.0'
-plugin 'cocoapods-binary'
+
+plugin 'cocoapods-binaryhqp'
 
 use_frameworks!
-all_binary!
+
 
 
 target 'demo' do
 
-  pod 'Masonry'
+  pod 'SnapKit', :binary => true  
+  # pod 'IQKeyboardManager',"~> 6.5.6",:binary => true
+  # pod 'ReactiveCocoa',"~> 11.2.2",:binary => true
+  # pod "Alamofire", "~> 4.7",:binary => true
+  # pod "Masonry", "~> 1.1.0",:binary => true
+  # pod "AlamofireImage","~> 3.6.0",:binary => true
 
 end

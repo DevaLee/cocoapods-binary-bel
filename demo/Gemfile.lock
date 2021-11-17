@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    cocoapods-binary (0.4.4)
+    cocoapods-binaryhqp (0.4.4)
       cocoapods
       fourflusher
       xcpretty
@@ -109,7 +109,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods
-  cocoapods-binary!
+  cocoapods-binaryhqp!
   debase (~> 0.2.5.beta2)
   ruby-debug-ide
   xcpretty
