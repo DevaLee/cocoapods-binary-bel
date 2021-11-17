@@ -1,4 +1,3 @@
-
 <p align="center"><img src="/test/logo.png" width="622"></p>
 
 [![Build Status](https://travis-ci.org/leavez/cocoapods-binary.svg?branch=master)](https://travis-ci.org/leavez/cocoapods-binary)
@@ -74,5 +73,7 @@ If bitcode is needed, add a `enable_bitcode_for_prebuilt_frameworks!` before all
 MIT
 
 Appreciate a 🌟 if you like it. 
+
+# cocoapods-binaryhqp
 
 
