@@ -1,7 +1,8 @@
-
 # frozen_string_literal: true
 source "https://rubygems.org"
 
-gem 'cocoapods', '1.6.1'
-gem 'cocoapods-binary', :path => "../"
+gem 'cocoapods'
+gem 'cocoapods-binary',:path => "../"
 gem 'xcpretty'
+gem 'ruby-debug-ide'
+gem 'debase', '~> 0.2.5.beta2'
