@@ -76,6 +76,8 @@ end
 Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_context|
 
     require_relative 'helper/feature_switches'
+
+    Pod::UI.puts("ssssssss");
     if Pod.is_prebuild_stage
         next
     end

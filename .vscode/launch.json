@@ -6,7 +6,7 @@
       "type": "Ruby",
       "request": "launch",
       "useBundler": true,
-      "cwd": "${workspaceRoot}/demo", // pod 命令执行的路径
+      "cwd": "${workspaceRoot}/ddqp-swift", // pod 命令执行的路径
       "program": "/usr/local/bin/pod",
       "args": ["install", "--verbose"], // `pod` 命令的参数
 
