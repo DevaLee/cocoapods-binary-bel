@@ -181,7 +181,9 @@ module Pod
 
 
             specs = self.analysis_result.specifications
+
             prebuilt_specs = (specs.select do |spec|
+                
                 self.prebuild_pod_names.include? spec.root.name
             end)
 
@@ -190,6 +192,7 @@ module Pod
                 # Use the prebuild framworks as vendered frameworks
                 # get_corresponding_targets
                 targets = Pod.fast_get_targets_for_pod_name(spec.root.name, self.pod_targets, cache)
+  
                 targets.each do |target|
                     # the framework_file_path rule is decided when `install_for_prebuild`,
                     # as to compitable with older version and be less wordy.

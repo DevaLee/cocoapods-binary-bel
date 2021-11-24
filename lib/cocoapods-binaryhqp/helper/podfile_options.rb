@@ -28,7 +28,7 @@ module Pod
             if should_prebuild == true
                 @prebuild_framework_pod_names ||= []
                 @prebuild_framework_pod_names.push pod_name
-            else
+            elsif should_prebuild == false
                 @should_not_prebuild_framework_pod_names ||= []
                 @should_not_prebuild_framework_pod_names.push pod_name
             end
@@ -55,8 +55,9 @@ module Pod
         old_method = instance_method(:parse_inhibit_warnings)
 
         define_method(:parse_inhibit_warnings) do |name, requirements|
-          parse_prebuild_framework(name, requirements)
-          old_method.bind(self).(name, requirements)
+            variables = requirements
+            parse_prebuild_framework(name, requirements)
+            old_method.bind(self).(name, variables)
         end
         
       end
@@ -75,24 +76,29 @@ module Pod
             aggregate_targets.each do |aggregate_target|
                 target_definition = aggregate_target.target_definition
                 targets = aggregate_target.pod_targets || []
-
                 # filter prebuild
                 prebuild_names = target_definition.prebuild_framework_pod_names
                 if not Podfile::DSL.prebuild_all
                     targets = targets.select { |pod_target| prebuild_names.include?(pod_target.pod_name) } 
                 end
+            
                 dependency_targets = targets.map {|t| t.recursive_dependent_targets }.flatten.uniq || []
+             
                 targets = (targets + dependency_targets).uniq
-
                 # filter should not prebuild
                 explict_should_not_names = target_definition.should_not_prebuild_framework_pod_names
+                Pod::UI.puts(">>>>>>> 不需要二进制的framework: #{explict_should_not_names} ")
                 targets = targets.reject { |pod_target| explict_should_not_names.include?(pod_target.pod_name) } 
 
                 all += targets
+       
             end
-
             all = all.reject {|pod_target| sandbox.local?(pod_target.pod_name) }
+            Pod::UI.puts(">>>>>>> 需要二进制的framework: #{all}")
             all.uniq
+
+       
+            
             )
         end
 

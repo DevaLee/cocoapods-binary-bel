@@ -1,6 +1,7 @@
 # encoding: UTF-8
 require_relative 'helper/podfile_options'
 require_relative 'tool/tool'
+require_relative 'gem_version'
 
 module Pod    
     class Podfile
@@ -77,7 +78,8 @@ Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_co
 
     require_relative 'helper/feature_switches'
 
-    Pod::UI.puts("ssssssss");
+    Pod::UI.puts("当前版本:  #{CocoapodsBinaryHqp::VERSION}")
+ 
     if Pod.is_prebuild_stage
         next
     end

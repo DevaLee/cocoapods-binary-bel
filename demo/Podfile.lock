@@ -1,16 +1,405 @@
 PODS:
-  - SnapKit (4.2.0)
+  - Alamofire (4.9.1)
+  - AlamofireImage (3.6.0):
+    - Alamofire (~> 4.9)
+  - DDPhotoBrowser (2.0.2)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
+  - GTMBase64 (1.0.1)
+  - HappyDNS (0.3.17)
+  - HQPAliPay (0.1.4)
+  - HQPCarModelComponent (0.1.5):
+    - HQPCommonViewVC
+    - HQPDataPersistence
+    - HQPPinYinTranslate
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+  - HQPCircleScrollView (0.1.0):
+    - HQPUIKitExtension
+  - HQPCityPickerComponent (0.1.3):
+    - HQPCommonViewVC
+    - HQPDataPersistence
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+  - HQPCommonModel (0.1.10)
+  - HQPCommonTool (0.3.3):
+    - KeychainItemWrapper (~> 1.2)
+  - HQPCommonViewVC (0.1.33):
+    - HQPCommonTool
+    - HQPUIKitExtension
+    - Masonry
+    - SnapKit (~> 4.0.0)
+  - HQPCVPComponent (0.1.3):
+    - GTMBase64 (~> 1.0.1)
+    - HQPAliPay
+    - HQPCommonModel
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPWeChatPay
+    - HQPZJScrollPageView
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+  - HQPDataPersistence (0.1.8):
+    - FMDB (~> 2.7.5)
+    - HQPCommonModel
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+  - HQPFinancing (0.1.9):
+    - GTMBase64 (~> 1.0.1)
+    - HQPAliPay
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPWeChatPay
+    - IQKeyboardManagerExtension
+    - Masonry (~> 1.1.0)
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+    - SnapKit (~> 4.0.0)
+  - HQPFVPVerfiryOrderComponent (0.1.3):
+    - GTMBase64 (~> 1.0.1)
+    - HQPAliPay
+    - HQPCommonModel
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPWeChatPay
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+  - HQPGraphicCode (0.1.6):
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.0)
+  - HQPGuaranteeMoney (0.1.3):
+    - HQPAliPay
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPWeChatPay
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+  - HQPHomePageComponent (0.1.8):
+    - HQPCircleScrollView
+    - HQPCommonViewVC
+    - HQPDataPersistence
+    - HQPNetworkComponent
+    - HQPQRCode
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+  - HQPMainClass (0.1.6):
+    - HQPCommonModel
+    - HQPCommonTool
+    - HQPDataPersistence
+    - HQPPinYinTranslate
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.1)
+  - HQPMapLocationLib (0.1.1):
+    - Alamofire (~> 4.7)
+    - SwiftyJSON (~> 4.0)
+  - HQPNetworkComponent (0.1.9):
+    - Alamofire (~> 4.7)
+    - HQPCommonTool
+    - SwiftyJSON (~> 4.0)
+  - HQPOeCodeComponent (0.1.5):
+    - HQPCommonTool
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPPhotoPreview
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.1)
+  - HQPPermissionCheck (0.1.0):
+    - MBProgressHUDExtension
+  - HQPPhotoPreview (0.1.2):
+    - DDPhotoBrowser
+    - SDWebImage (~> 5.0)
+    - SnapKit (~> 4.0.1)
+  - HQPPinYinTranslate (0.1.0)
+  - HQPPurchaseComponent (0.1.13):
+    - HQPCommonModel
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPPhotoPreview
+    - HQPRedDot
+    - HQPSnapkitExtension
+    - HQPUIKitExtension
+    - HQPZJScrollPageView
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+    - SDWebImage
+  - HQPQiNiuUploadComponent (0.1.0):
+    - HappyDNS (~> 0.3.17)
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+  - HQPQRCode (0.1.2):
+    - HQPCommonTool
+    - HQPCommonViewVC
+    - HQPPermissionCheck
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.1)
+  - HQPReceiveAddress (0.1.2):
+    - HQPCityPickerComponent
+    - HQPCommonViewVC
+    - HQPMapLocationLib
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+  - HQPRedDot (0.1.1)
+  - HQPRegisterLogin (0.1.9):
+    - HQPCommonModel
+    - HQPCommonViewVC
+    - HQPGraphicCode
+    - HQPMapLocationLib
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPUserInfoCenter
+    - HQPWebView
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.0)
+  - HQPSnapkitExtension (0.1.0):
+    - SnapKit (~> 4.0.1)
+  - HQPUIKitExtension (0.1.23):
+    - SDWebImage (~> 5.1.1)
+  - HQPUserCouponComponent (0.1.3):
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPUIKitExtension
+    - HQPZJScrollPageView
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+  - HQPUserInfoCenter (0.1.20):
+    - HQPCityPickerComponent
+    - HQPCommonModel
+    - HQPCommonTool
+    - HQPCommonViewVC
+    - HQPDataPersistence
+    - HQPGraphicCode
+    - HQPMapLocationLib
+    - HQPPermissionCheck
+    - HQPPhotoPreview
+    - HQPQiNiuUploadComponent
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - MJRefresh (~> 3.7.1)
+  - HQPVinRecognized (0.1.5):
+    - HQPNetworkComponent
+    - HQPPermissionCheck
+  - HQPWebView (0.2.10):
+    - HQPCommonModel
+    - HQPCommonTool
+    - HQPCommonViewVC
+    - HQPDataPersistence
+    - HQPNetworkComponent
+    - HQPPermissionCheck
+    - HQPPhotoPreview
+    - HQPQRCode
+    - HQPUIKitExtension
+    - MBProgressHUDExtension
+    - SnapKit (~> 4.0.1)
+  - HQPWeChatPay (0.1.5):
+    - GTMBase64
+  - HQPZJScrollPageView (0.1.0)
+  - IQKeyboardManager (6.5.9)
+  - IQKeyboardManagerExtension (0.1.1):
+    - IQKeyboardManager
+  - KeychainItemWrapper (1.2)
+  - Masonry (1.1.0)
+  - MBProgressHUDExtension (0.1.5)
+  - MJRefresh (3.7.2)
+  - ReactiveCocoa (11.2.2):
+    - ReactiveSwift (~> 6.6)
+  - ReactiveSwift (6.7.0)
+  - SDWebImage (5.1.1):
+    - SDWebImage/Core (= 5.1.1)
+  - SDWebImage/Core (5.1.1)
+  - SellProcurement (0.2.13):
+    - HQPCommonModel
+    - HQPCommonViewVC
+    - HQPNetworkComponent
+    - HQPPhotoPreview
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - MJRefresh
+    - SnapKit (~> 4.0.0)
+  - SnapKit (4.0.1)
+  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
+  - Alamofire (~> 4.7)
+  - AlamofireImage (~> 3.6.0)
+  - DDPhotoBrowser (~> 2.0.2)
+  - FMDB (~> 2.7.5)
+  - GTMBase64 (~> 1.0.1)
+  - HappyDNS (~> 0.3.17)
+  - HQPCarModelComponent
+  - HQPCircleScrollView
+  - HQPCityPickerComponent
+  - HQPCommonModel
+  - HQPCommonTool
+  - HQPCommonViewVC
+  - HQPCVPComponent
+  - HQPDataPersistence
+  - HQPFinancing
+  - HQPFVPVerfiryOrderComponent
+  - HQPGraphicCode
+  - HQPGuaranteeMoney
+  - HQPHomePageComponent
+  - HQPMainClass
+  - HQPMapLocationLib
+  - HQPNetworkComponent
+  - HQPOeCodeComponent
+  - HQPPermissionCheck
+  - HQPPhotoPreview
+  - HQPPinYinTranslate
+  - HQPPurchaseComponent
+  - HQPQiNiuUploadComponent
+  - HQPQRCode
+  - HQPReceiveAddress
+  - HQPRedDot
+  - HQPRegisterLogin
+  - HQPSnapkitExtension
+  - HQPUIKitExtension
+  - HQPUserCouponComponent
+  - HQPUserInfoCenter
+  - HQPVinRecognized
+  - HQPWebView
+  - HQPZJScrollPageView
+  - IQKeyboardManager (~> 6.5.6)
+  - IQKeyboardManagerExtension
+  - Masonry (~> 1.1.0)
+  - MBProgressHUDExtension
+  - MJRefresh (~> 3.7.2)
+  - ReactiveCocoa (~> 11.2.2)
+  - ReactiveSwift (~> 6.7.0)
+  - SDWebImage (~> 5.1.1)
+  - SellProcurement
   - SnapKit
+  - SwiftyJSON
 
 SPEC REPOS:
-  trunk:
+  http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git:
+    - HQPAliPay
+    - HQPCarModelComponent
+    - HQPCircleScrollView
+    - HQPCityPickerComponent
+    - HQPCommonModel
+    - HQPCommonTool
+    - HQPCommonViewVC
+    - HQPCVPComponent
+    - HQPDataPersistence
+    - HQPFinancing
+    - HQPFVPVerfiryOrderComponent
+    - HQPGraphicCode
+    - HQPGuaranteeMoney
+    - HQPHomePageComponent
+    - HQPMainClass
+    - HQPMapLocationLib
+    - HQPNetworkComponent
+    - HQPOeCodeComponent
+    - HQPPermissionCheck
+    - HQPPhotoPreview
+    - HQPPinYinTranslate
+    - HQPPurchaseComponent
+    - HQPQiNiuUploadComponent
+    - HQPQRCode
+    - HQPReceiveAddress
+    - HQPRedDot
+    - HQPRegisterLogin
+    - HQPSnapkitExtension
+    - HQPUIKitExtension
+    - HQPUserCouponComponent
+    - HQPUserInfoCenter
+    - HQPVinRecognized
+    - HQPWebView
+    - HQPWeChatPay
+    - HQPZJScrollPageView
+    - IQKeyboardManagerExtension
+    - MBProgressHUDExtension
+    - SellProcurement
+  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+    - Alamofire
+    - AlamofireImage
+    - DDPhotoBrowser
+    - FMDB
+    - GTMBase64
+    - HappyDNS
+    - IQKeyboardManager
+    - KeychainItemWrapper
+    - Masonry
+    - MJRefresh
+    - ReactiveCocoa
+    - ReactiveSwift
+    - SDWebImage
     - SnapKit
+    - SwiftyJSON
 
 SPEC CHECKSUMS:
-  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AlamofireImage: be9963c6582d68b39e89191f64c82a7d7bf40fdd
+  DDPhotoBrowser: 4ff162a1ad8ce32776ab248480a283bf1fb31e73
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
+  GTMBase64: f0f91be06a7a20b84c8e4fee30c0430395091d82
+  HappyDNS: 848ef73e24f2b0e2752064223ce2dc0dd88900ea
+  HQPAliPay: f00f8533bdfe7d54a9cd747b56875591b8eb1b0a
+  HQPCarModelComponent: bc7d2e0464fdac31bf30e780c5f9ff14e84fc33b
+  HQPCircleScrollView: f815b8a0826caa2d8f99ac01af88b72d184fcab5
+  HQPCityPickerComponent: a88c64ca6357f27ac69941cca0886b84cd9ec6e8
+  HQPCommonModel: 1b4cbc6bdb3c1370a8691dd01c85514c78dab484
+  HQPCommonTool: 084d953422ce12c223fd700a5f07e41658115dbf
+  HQPCommonViewVC: dc2dbdb0e8581c4489e8e8410a2cd7ba0bc452ae
+  HQPCVPComponent: c1e41bf924f2801376c2f1b3f8f647a81ed3e425
+  HQPDataPersistence: 9be000f4570edc759123779071c1d4bef577c294
+  HQPFinancing: 35f845dc4195f7cdaf7a77cc36f5b407b563f6b3
+  HQPFVPVerfiryOrderComponent: b659a73307c372476d2d34bc95d19e2d56ebd997
+  HQPGraphicCode: eb83c87f4ae1a7dccefb19dd0a27e13986a90245
+  HQPGuaranteeMoney: 87a0df83e2ecc737103dabaa5debf7c80005e4a6
+  HQPHomePageComponent: 54ef993533205cf4576dbd6127a8b251bb0f73e0
+  HQPMainClass: 53bfb7845ddd4ac7335754018aededea8d5fc5fd
+  HQPMapLocationLib: 7454b5c54f226235c95d80b9e9f0e612f6ced8df
+  HQPNetworkComponent: 07209a14b189be84b28a187c6db0016b3513d9da
+  HQPOeCodeComponent: 34f581a7085579e0b2ea39f2f8797e9bfccab775
+  HQPPermissionCheck: aa1c2e944de77dbbf96ff6ebeafec2f017d0e5e4
+  HQPPhotoPreview: fd6171099f99c5611a69abd9a09f1d0cdaa259f3
+  HQPPinYinTranslate: af4f749bbeac11952ccdc8d9c056e99d5aaf8402
+  HQPPurchaseComponent: 98dafac8ded0aea7f256ffcb56bfcc9c11c97eb9
+  HQPQiNiuUploadComponent: 95a8dc75447ed014f3ee3f4b18f5df80cf6491a9
+  HQPQRCode: 92774487652849b60c5439e209fa34d84356b4dc
+  HQPReceiveAddress: 854d8b6416b8cbf3d883ca546b0ccbb4300f11a0
+  HQPRedDot: 9bc5376db43e18298bc0c317818ccde6efef7a7c
+  HQPRegisterLogin: ea794cb984cdf27c0ce0f17b70ac655e17d3629c
+  HQPSnapkitExtension: 60ad8a9bffed770da95a58b85999b81f7222041e
+  HQPUIKitExtension: c5c6f4b0199c96ba88ea186add5d0cb305d99359
+  HQPUserCouponComponent: fd8179781d9cec0a1a0f891efe37bec04c7b1f61
+  HQPUserInfoCenter: 15b85dd44bf0879f599f4dca6a8625538c3fbfa4
+  HQPVinRecognized: 84209caed78b9ac102ee9a3ae997e11e152a0d3f
+  HQPWebView: 34c13abea7f2e0dfac68491a1486807cfce01f79
+  HQPWeChatPay: 458d3876fafc6ef44055e7e737feffcdec03b615
+  HQPZJScrollPageView: e055c86762681bcce3e2a8dc05970ff0fbb1a58f
+  IQKeyboardManager: 241cc94ccabc9deb8f8bd7d12f00d73288d13ecc
+  IQKeyboardManagerExtension: cfaac6acc9c9951da4617a20d41d1fdf19723254
+  KeychainItemWrapper: 67a240172ed669842bc6bc13ed554dcd50469fa2
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  MBProgressHUDExtension: 574ece1a4bae4e6ac833ce3d7f6e3351f0d0d182
+  MJRefresh: 30997d30b347c8e9508a4db11e3a690da0c9b85a
+  ReactiveCocoa: e539cd41c523c8c80851b88e9723235c933b024b
+  ReactiveSwift: 208201d6ecc9734196d147aa76bc1f24b1b821fe
+  SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
+  SellProcurement: 8f0136de70c894f80396586036d7d8737aedf731
+  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 3f8148dea3dd250675654102e6790b5cee459d9f
+PODFILE CHECKSUM: f32cf4e69e982f782e3014aaa1f1e6b537ddeb54
 
 COCOAPODS: 1.11.2

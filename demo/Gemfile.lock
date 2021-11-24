@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    cocoapods-binaryhqp (0.4.4)
+    cocoapods-binaryhqp (0.4.7)
       cocoapods
       fourflusher
       xcpretty
