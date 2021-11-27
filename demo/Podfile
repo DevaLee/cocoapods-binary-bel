@@ -1,3 +1,5 @@
+
+
 source "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
 source "http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git"
 
@@ -5,64 +7,12 @@ platform :ios, '9.0'
 
 plugin 'cocoapods-binaryhqp'
 
+
 use_frameworks!
 
 target 'demo' do
-
+  pod 'ABC', :binary => true
   pod 'SnapKit', :binary => true
-  pod 'SwiftyJSON', :binary => true
-  pod 'SDWebImage', "~> 5.1.1", :binary => true
-  pod 'ReactiveSwift', "~> 6.7.0",:binary => true
-  pod 'ReactiveCocoa', "~> 11.2.2",:binary => true
-  pod 'MJRefresh', "~> 3.7.2", :binary => true
-  pod 'HappyDNS', "~> 0.3.17", :binary => true
-  pod 'GTMBase64', "~> 1.0.1", :binary => true
-  pod 'FMDB', "~> 2.7.5", :binary => true
-  pod 'DDPhotoBrowser', "~> 2.0.2", :binary => true
-  pod 'IQKeyboardManager',"~> 6.5.6", :binary => true
-  pod "Alamofire", "~> 4.7", :binary => true
-  pod "Masonry", "~> 1.1.0", :binary => true
-  pod "AlamofireImage","~> 3.6.0", :binary => true
-  
-  
-  
-  
-  pod "HQPCircleScrollView", :binary => true
-  pod "HQPCityPickerComponent", :binary => true
-  pod "HQPCommonModel", :binary => true
-  pod "HQPGraphicCode", :binary => true
-  pod "HQPMapLocationLib", :binary => true
-  pod "HQPPermissionCheck", :binary => true
-  pod "HQPPhotoPreview", :binary => true
-  pod "HQPPinYinTranslate", :binary => true
-  pod "HQPQiNiuUploadComponent", :binary => true
-  pod "HQPSnapkitExtension", :binary => true
-  pod "HQPUIKitExtension", :binary => true
-  pod 'MBProgressHUDExtension', :binary => true
-  pod 'IQKeyboardManagerExtension', :binary => true
-  pod 'SellProcurement',:binary => true
-  pod 'HQPMainClass',:binary => true
-  pod 'HQPOeCodeComponent',:binary => true
-  pod 'HQPUserInfoCenter', :binary => true
-  pod 'HQPFinancing', :binary => true
-  pod 'HQPUserCouponComponent', :binary => true
-  pod 'HQPGuaranteeMoney', :binary => true
-  pod 'HQPVinRecognized'
-  pod 'HQPZJScrollPageView', :binary => true
-  pod 'HQPHomePageComponent', :binary => true
-  pod 'HQPPurchaseComponent', :binary => true
-  pod 'HQPRedDot', :binary => true
-  pod 'HQPReceiveAddress', :binary => true
-  pod 'HQPCommonTool', :binary => true
-  pod 'HQPDataPersistence', :binary => true
-  pod 'HQPCarModelComponent', :binary => true
-  pod 'HQPQRCode', :binary => true
-  pod 'HQPRegisterLogin', :binary => true
-  pod 'HQPCVPComponent', :binary => true
-  pod 'HQPWebView', :binary => true
-  pod 'HQPFVPVerfiryOrderComponent', :binary => true
-  pod 'HQPNetworkComponent', :binary => true
-  pod 'HQPCommonViewVC', :binary => true
 
 end
 

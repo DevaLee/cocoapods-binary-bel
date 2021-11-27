@@ -1,12 +1,16 @@
 require_relative 'rome/build_framework'
 require_relative 'helper/passer'
 require_relative 'helper/target_checker'
+require 'cfpropertylist'
+
+
 
 
 # patch prebuild ability
 module Pod
     class Installer
 
+        include Config::Mixin
         
         private
 
@@ -18,27 +22,95 @@ module Pod
             end
             @local_manifest
         end
-
-        # @return [Analyzer::SpecsState]
+         # @return [Analyzer::SpecsState]
         def prebuild_pods_changes
+            # return nil if local_manifest.nil?
+            # if @prebuild_pods_changes.nil?
+            #     changes = local_manifest.detect_changes_with_podfile(podfile)
+            #     @prebuild_pods_changes = Analyzer::SpecsState.new(changes)
+            #     # save the chagnes info for later stage
+            #     Pod::Prebuild::Passer.prebuild_pods_changes = @prebuild_pods_changes 
+            # end
+            # @prebuild_pods_changes
+
+
             return nil if local_manifest.nil?
-            if @prebuild_pods_changes.nil?
+            # if @prebuild_pods_changes.nil?
                 changes = local_manifest.detect_changes_with_podfile(podfile)
+
+                unchanged_pod_names = changes[:unchanged]
+                changed_pod_names = changes[:changed]
+
+                unchanged_pod_names.reverse_each do |name|
+                    mainfest_pod_version = local_manifest.version(name).to_s
+                    already_prebuild_version = prebuilded_framework_version(name) || "未找到"
+                    if already_prebuild_version != mainfest_pod_version 
+
+                        Pod::UI.puts("- #{name} 已编译版本 #{already_prebuild_version}, manifest中的版本: #{mainfest_pod_version}") if config.verbose
+                        
+                       changed_pod_names = changed_pod_names.push(name)
+                       unchanged_pod_names.delete(name)
+                    end
+                end
+
+                changes[:changed] = changed_pod_names
+                changes[:unchanged] = unchanged_pod_names
+
+                Pod::UI.puts("需要重编译的framework : #{changed_pod_names.to_s}") if config.verbose
+                changed_pod_names.each do |name|
+                    self.sandbox.delete_old_version_prebuilded_framework(name)
+                end
                 @prebuild_pods_changes = Analyzer::SpecsState.new(changes)
                 # save the chagnes info for later stage
                 Pod::Prebuild::Passer.prebuild_pods_changes = @prebuild_pods_changes 
-            end
+            # elsif
+
+            # end
             @prebuild_pods_changes
         end
+       
 
         
         public 
 
+        def post_update_build_changed
+            # 无任何change
+            changes = lockfile.detect_changes_with_podfile(podfile)
+            unchanged_pod_names = changes[:unchanged]
+            changed_pod_names = changes[:changed]
+
+            Pod::UI.puts("检查已编译的版本是否和 Podile.lock 中的版本是否一致")
+            unchanged_pod_names.reverse_each do |name|
+                mainfest_pod_version = lockfile.version(name).to_s
+                already_prebuild_version = prebuilded_framework_version(name) || "未找到"
+                if already_prebuild_version != mainfest_pod_version 
+
+                    Pod::UI.puts("- #{name} 已编译版本 #{already_prebuild_version}, manifest中的版本: #{mainfest_pod_version}") if config.verbose
+                        
+                    changed_pod_names = changed_pod_names.push(name)
+                    unchanged_pod_names.delete(name)
+                end
+            end
+
+            changes[:changed] = changed_pod_names
+            changes[:unchanged] = unchanged_pod_names
+
+            Pod::UI.puts("需要重编译的framework : #{changed_pod_names.to_s}") if config.verbose
+
+            @prebuild_pods_changes = Analyzer::SpecsState.new(changes)
+            # save the chagnes info for later stage
+            Pod::Prebuild::Passer.prebuild_pods_changes = @prebuild_pods_changes 
+
+            prebuild_frameworks!
+
+        end
+        
         # check if need to prebuild
         def have_exact_prebuild_cache?
+
             # check if need build frameworks
-            return false if local_manifest == nil
-            
+            return false if local_manifest == nil 
+        
             changes = prebuild_pods_changes
             added = changes.added
             changed = changes.changed 
@@ -50,11 +122,23 @@ module Pod
                 not exsited_framework_pod_names.include?(pod_name)
             end
 
-            needed = (added + changed + deleted + missing)
+            needed = (added + changed + deleted + missing) 
+
             return needed.empty?
         end
+        # 当前已编译的framework的版本
+        def prebuilded_framework_version(name)
+            path = self.sandbox.plist_path_for_target_name(name)
+            framework_version = ""
+            if Pathname.new(path).exist?
+                plist_file = CFPropertyList::List.new(:file => path) 
+                data = CFPropertyList.native_types(plist_file.value)
+                framework_version = data["CFBundleShortVersionString"]
+            end
+            framework_version
+        end
         
-        
+
         # The install method when have completed cache
         def install_when_cache_hit!
             # just print log
@@ -66,7 +150,6 @@ module Pod
 
         # Build the needed framework files
         def prebuild_frameworks! 
-
             # build options
             sandbox_path = sandbox.root
             existed_framework_folder = sandbox.generate_framework_path
@@ -122,6 +205,7 @@ module Pod
                 end
 
                 output_path = sandbox.framework_folder_path_for_target_name(target.name)
+                output_path.rmtree if output_path.exist?
                 output_path.mkpath unless output_path.exist?
                 Pod::Prebuild.build(sandbox_path, target, output_path, bitcode_enabled,  Podfile::DSL.custom_build_options,  Podfile::DSL.custom_build_options_simulator)
 
@@ -214,11 +298,28 @@ module Pod
                 path = sandbox.root + 'Manifest.lock.tmp'
                 path.rmtree if path.exist?
             end
-            
-
-
         end
+
+
+        # old_method3 = instance_method(:perform_post_install_actions)
+        # define_method(:perform_post_install_actions) do
+        #     Pod::UI.puts(">>>>>>>>>>>>>> pod update 检查 spec 依赖 是否有改动")
         
+
+        #     standard_sandbox = self.sandbox
+        #     prebuild_sandbox = Pod::PrebuildSandbox.from_standard_sandbox(standard_sandbox)
+            
+        #     # get the podfile for prebuild
+        #     prebuild_podfile = Pod::Podfile.from_ruby(podfile.defined_in_file)
+            
+        #     # install
+        #     lockfile = self.lockfile
+        #     binary_installer = Pod::Installer.new(prebuild_sandbox, prebuild_podfile, lockfile)
+        #     binary_installer.remove_target_files_if_needed
+        #     binary_installer.post_update_build_changed
+
+        #     old_method3.bind(self).()
+        # end
         
         # patch the post install hook
         old_method2 = instance_method(:run_plugins_post_install_hooks)

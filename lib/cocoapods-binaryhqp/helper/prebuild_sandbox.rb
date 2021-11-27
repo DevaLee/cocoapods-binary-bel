@@ -27,6 +27,25 @@ module Pod
             self.generate_framework_path + name
         end
 
+        def plist_path_for_target_name(name)
+            framework_path = framework_folder_path_for_target_name(name)
+            "#{framework_path}/#{name}.framework/Info.plist"
+        end
+
+        # 删除与 spec 文件不一致的framework
+        def delete_old_version_prebuilded_framework(name)
+
+            # folder_path = self.framework_folder_path_for_target_name(name)
+            # folder_path.rmtree if folder_path.exist?
+
+            # source_framework_path = self.source_framework_path(name)
+            # source_framework_path.rmtree if source_framework_path.exist?
+        end
+
+        def source_framework_path(name)
+            self.root + name
+        end
+
         
         def exsited_framework_target_names
             exsited_framework_name_pairs.map {|pair| pair[0]}.uniq

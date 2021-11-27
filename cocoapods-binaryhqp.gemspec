@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "cocoapods"
   spec.add_runtime_dependency "fourflusher"
   spec.add_runtime_dependency "xcpretty"
+  spec.add_runtime_dependency "CFPropertyList"
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
