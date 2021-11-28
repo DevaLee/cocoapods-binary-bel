@@ -4,7 +4,7 @@ if version == nil
     puts "please input a version"
     exit
 end
-path = "lib/cocoapods-binaryhqp/gem_version.rb"
+path = "lib/cocoapods-binary-bel/gem_version.rb"
 content = <<-eos
 module CocoapodsBinary
     VERSION = "#{version}"
@@ -14,4 +14,4 @@ File.write(path, content)
 
 `git add -A; git commit -m "bump version"; git push`
 `rake install`
-`gem push pkg/cocoapods-binaryhqp-#{version}.gem`
+`gem push pkg/cocoapods-binary-bel-#{version}.gem`

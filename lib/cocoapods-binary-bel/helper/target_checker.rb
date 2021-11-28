@@ -12,7 +12,7 @@ module Pod
       if targets_have_different_platforms.count > 0
         names = targets_have_different_platforms.map(&:pod_name)
         raw_names = targets_have_different_platforms.map(&:name)
-        message = "Oops, you came across a limitation of cocoapods-binaryhqp.
+        message = "Oops, you came across a limitation of cocoapods-binary-bel.
 
 The plugin requires that one pod should have ONLY ONE target in the 'Pod.xcodeproj'. There are mainly 2 situations \
 causing this problem:

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in cocoapods-binaryhqp.gemspec
+# Specify your gem's dependencies in cocoapods-binary-bel.gemspec
 gemspec
 
 

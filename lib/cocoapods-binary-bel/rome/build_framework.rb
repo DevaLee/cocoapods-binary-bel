@@ -71,15 +71,15 @@ def build_for_iosish_platform(sandbox,
     simulator_header = File.read(simulator_generated_swift_header_path)
     # https://github.com/Carthage/Carthage/issues/2718#issuecomment-473870461
     combined_header_content = %Q{
-#if TARGET_OS_SIMULATOR // merged by cocoapods-binaryhqp
+#if TARGET_OS_SIMULATOR // merged by cocoapods-binary-bel
 
 #{simulator_header}
 
-#else // merged by cocoapods-binaryhqp
+#else // merged by cocoapods-binary-bel
 
 #{device_header}
 
-#endif // merged by cocoapods-binaryhqp
+#endif // merged by cocoapods-binary-bel
 }
     File.write(device_generated_swift_header_path, combined_header_content.strip)
   end

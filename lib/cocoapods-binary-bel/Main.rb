@@ -74,14 +74,14 @@ module Pod
     end
 end
 
-Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_context|
+Pod::HooksManager.register('cocoapods-binary-bel', :pre_install) do |installer_context|
 
     require_relative 'helper/feature_switches'
     if Pod.is_prebuild_stage
         next
     end
 
-    Pod::UI.puts("当前版本:  #{CocoapodsBinaryHqp::VERSION}")
+    Pod::UI.puts("当前版本:  #{CocoapodsBinaryBel::VERSION}")
     
     # [Check Environment]
     # check user_framework is on
@@ -89,7 +89,7 @@ Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_co
     podfile.target_definition_list.each do |target_definition|
         next if target_definition.prebuild_framework_pod_names.empty?
         if not target_definition.uses_frameworks?
-            STDERR.puts "[!] Cocoapods-binaryhqp requires `use_frameworks!`".red
+            STDERR.puts "[!] Cocoapods-binary-bel requires `use_frameworks!`".red
             exit
         end
     end

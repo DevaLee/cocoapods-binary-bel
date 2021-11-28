@@ -1,2 +1,2 @@
-require 'cocoapods-binaryhqp/Main'
+require 'cocoapods-binary-bel/Main'
 

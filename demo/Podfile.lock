@@ -1,21 +1,20 @@
 PODS:
-  - ABC (0.1.4)
+  - Alamofire (4.9.1)
   - SnapKit (4.2.0)
 
 DEPENDENCIES:
-  - ABC
-  - SnapKit
+  - Alamofire
+  - SnapKit (= 4.2.0)
 
 SPEC REPOS:
-  http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git:
-    - ABC
-  https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
+  trunk:
+    - Alamofire
     - SnapKit
 
 SPEC CHECKSUMS:
-  ABC: 517ec7e646a8223189d3bec60f5f8aa7c6848257
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
 
-PODFILE CHECKSUM: 11ef010c155cbcc9ef82b2d9cc3b3b6f28e7a72c
+PODFILE CHECKSUM: ea0433135e947e6e6b18dcd5745b901320a00d87
 
 COCOAPODS: 1.11.2

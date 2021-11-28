@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    cocoapods-binaryhqp (0.4.8)
+    cocoapods-binary-bel (0.4.8)
       CFPropertyList
       cocoapods
       fourflusher
@@ -66,7 +66,7 @@ GEM
     concurrent-ruby (1.1.9)
     debase (0.2.5.beta2)
       debase-ruby_core_source (>= 0.10.12)
-    debase-ruby_core_source (0.10.12)
+    debase-ruby_core_source (0.10.13)
     escape (0.0.4)
     ethon (0.15.0)
       ffi (>= 1.15.0)
@@ -106,15 +106,15 @@ GEM
     zeitwerk (2.5.1)
 
 PLATFORMS
-  ruby
+  universal-darwin-20
 
 DEPENDENCIES
   CFPropertyList
   cocoapods
-  cocoapods-binaryhqp!
+  cocoapods-binary-bel!
   debase (~> 0.2.5.beta2)
   ruby-debug-ide
   xcpretty
 
 BUNDLED WITH
-   2.1.4
+   2.2.26

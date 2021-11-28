@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'cocoapods-binaryhqp/gem_version.rb'
+require 'cocoapods-binary-bel/gem_version.rb'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'cocoapods-binaryhqp'
-  spec.version       = CocoapodsBinaryHqp::VERSION
+  spec.name          = 'cocoapods-binary-bel'
+  spec.version       = CocoapodsBinaryBel::VERSION
   spec.authors       = ['leavez']
   spec.email         = ['gaojiji@gmail.com']
   spec.description   = %q{integrate pods in form of prebuilt frameworks conveniently, reducing compile time}

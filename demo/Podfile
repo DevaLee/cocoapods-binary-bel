@@ -1,18 +1,16 @@
 
-
-source "https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git"
-source "http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git"
-
 platform :ios, '9.0'
 
-plugin 'cocoapods-binaryhqp'
+plugin 'cocoapods-binary-bel'
 
 
 use_frameworks!
 
 target 'demo' do
-  pod 'ABC', :binary => true
-  pod 'SnapKit', :binary => true
+  pod 'Alamofire', :binary => true
+  pod 'SnapKit',"4.2.0", :binary => true
+
+  # 4.0.1
 
 end
 
