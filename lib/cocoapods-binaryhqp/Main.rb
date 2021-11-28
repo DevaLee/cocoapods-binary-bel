@@ -77,12 +77,11 @@ end
 Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_context|
 
     require_relative 'helper/feature_switches'
-
-    Pod::UI.puts("当前版本:  #{CocoapodsBinaryHqp::VERSION}")
- 
     if Pod.is_prebuild_stage
         next
     end
+
+    Pod::UI.puts("当前版本:  #{CocoapodsBinaryHqp::VERSION}")
     
     # [Check Environment]
     # check user_framework is on
@@ -152,6 +151,9 @@ Pod::HooksManager.register('cocoapods-binaryhqp', :pre_install) do |installer_co
     Pod::Installer.disable_install_complete_message false
     Pod::UserInterface.warnings = [] # clean the warning in the prebuild step, it's duplicated.
     
+    
+
+
     
     # -- step 2: pod install ---
     # install

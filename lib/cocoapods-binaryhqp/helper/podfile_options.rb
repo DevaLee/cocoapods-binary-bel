@@ -87,14 +87,14 @@ module Pod
                 targets = (targets + dependency_targets).uniq
                 # filter should not prebuild
                 explict_should_not_names = target_definition.should_not_prebuild_framework_pod_names
-                Pod::UI.puts(">>>>>>> 不需要二进制的framework: #{explict_should_not_names} ")
+                Pod::UI.puts(">>>>>>> 不需要二进制的framework: #{explict_should_not_names} ") if config.verbose
                 targets = targets.reject { |pod_target| explict_should_not_names.include?(pod_target.pod_name) } 
 
                 all += targets
        
             end
             all = all.reject {|pod_target| sandbox.local?(pod_target.pod_name) }
-            Pod::UI.puts(">>>>>>> 需要二进制的framework: #{all}")
+            Pod::UI.puts(">>>>>>> 需要二进制的framework: #{all}") if config.verbose
             all.uniq
 
        
