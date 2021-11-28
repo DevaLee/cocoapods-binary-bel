@@ -34,12 +34,12 @@ Then in the flowing normal install process, we hook the integration functions to
 ## Installation
 
 ## 编译方法
-sudo gem build cocoapods-binaryhqp.gemspec && sudo gem install cocoapods-binaryhqp-0.4.7.gem
+sudo gem build cocoapods-binary-bel.gemspec && sudo gem install cocoapods-binary-bel-0.4.8.gem
 
 ## Usage
 
 ``` ruby
-plugin 'cocoapods-binary'
+plugin 'cocoapods-binary-bel'
 
 use_frameworks!
 # all_binary!
@@ -75,6 +75,6 @@ MIT
 
 Appreciate a 🌟 if you like it. 
 
-# cocoapods-binaryhqp
+# cocoapods-binary-bel
 
 
