@@ -25,6 +25,8 @@ It will compile the source code of pods during the pod install process, and make
 
 #### Under the hood
 
+blog:  https://juejin.cn/post/7035628418972516360
+
 ( You could leave this paragraph for further reading, and try it now. )
 
 The plugin will do a separated completed 'Pod install' in the standard pre-install hook. But we filter the pods by the flag in Podfile here. Then build frameworks with this generated project by using xcodebuild. Store the frameworks in `Pods/_Prebuild` and save the manifest.lock file for the next pod install.
@@ -33,8 +35,7 @@ Then in the flowing normal install process, we hook the integration functions to
 
 ## Installation
 
-## 编译方法
-sudo gem build cocoapods-binary-bel.gemspec && sudo gem install cocoapods-binary-bel-0.4.8.gem
+sudo gem install cocoapods-binary-bel
 
 ## Usage
 
@@ -49,9 +50,11 @@ target "HP" do
 end
 ```
 
-- Add `plugin 'cocoapods-binary'` in the head of Podfile 
+- Add `plugin 'cocoapods-binary-bel'` in the head of Podfile 
 - Add `:binary => true` as a option of one specific pod, or add `all_binary!` before all targets, which makes all pods binaries.
 - pod install, and that's all
+
+
 
 **Note**: cocoapods-binary require `use_frameworks!`. If your worry about the boot time and other problems introduced by dynamic framework, static framework is a good choice. Another [plugin](https://github.com/leavez/cocoapods-static-swift-framework) made by me to make all pods static frameworks is recommended.
 
@@ -62,6 +65,8 @@ If you want to disable binary for a specific pod when using `all_binary!`, place
 If your `Pods` folder is excluded from git, you may add `keep_source_code_for_prebuilt_frameworks!` in the head of Podfile to speed up pod install, as it won't download all the sources every time prebuilt pods have changes.
 
 If bitcode is needed, add a `enable_bitcode_for_prebuilt_frameworks!` before all targets in Podfile
+
+if you want to all  use source code, use `pod install --hsource`
 
 
 #### Known Issues
