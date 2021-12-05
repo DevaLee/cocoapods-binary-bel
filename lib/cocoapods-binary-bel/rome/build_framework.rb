@@ -115,6 +115,7 @@ def xcodebuild(sandbox, target, sdk='macosx', deployment_target=nil, other_optio
   is_succeed = (exit_code == 0)
 
   if !is_succeed
+    Pod::UI.puts("xcodebuild failed exitstatus:#{exit_code}") 
     begin
         if log.include?('** BUILD FAILED **')
             # use xcpretty to print build log

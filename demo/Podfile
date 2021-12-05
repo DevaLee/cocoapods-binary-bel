@@ -6,6 +6,8 @@ plugin 'cocoapods-binary-bel'
 
 use_frameworks!
 
+keep_source_code_for_prebuilt_frameworks!
+
 target 'demo' do
   pod 'Alamofire', :binary => true
   pod 'SnapKit',"4.2.0", :binary => true
@@ -13,6 +15,26 @@ target 'demo' do
   # 4.0.1
 
 end
+
+
+
+$static_framework = [
+  'SnapKit',
+  'Alamofire'
+]
+
+pre_install do |install|
+  # workaround for https://github.com/CocoaPods/CocoaPods/issues/3289
+  Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+  install.pod_targets.each {| pod |
+    if $static_framework.include?(pod.name)
+      def pod.build_type;
+        Pod::BuildType.static_framework
+      end
+    end
+  }
+end
+
 
 
 

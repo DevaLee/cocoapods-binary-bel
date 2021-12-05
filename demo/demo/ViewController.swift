@@ -8,9 +8,7 @@
 
 import UIKit
 import SnapKit
-import ABC
-
-
+import Alamofire
 
 
 class ViewController: UIViewController {
@@ -18,8 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         let obj = ABC()
-         obj.run()
+
         
         // Do any additional setup after loading the view.
         view.backgroundColor = .white
@@ -34,6 +31,11 @@ class ViewController: UIViewController {
             make.left.equalToSuperview().inset(100)
             make.top.equalToSuperview().inset(100)
             make.width.height.equalTo(100)
+        }
+        
+        
+        Alamofire.request("http://www.baidu.com").responseJSON { data in
+            
         }
         
         

@@ -33,7 +33,7 @@ module Pod
             unchanged_pod_names.reverse_each do |name|
                 mainfest_pod_version = local_manifest.version(name).to_s
                 already_prebuild_version = prebuilded_framework_version(name) || "未找到"
-                if already_prebuild_version != mainfest_pod_version 
+                if not compare_version(mainfest_pod_version, already_prebuild_version) 
                     Pod::UI.puts("- #{name} 已编译版本 #{already_prebuild_version}, manifest中的版本: #{mainfest_pod_version}") if config.verbose                        
                     changed_pod_names = changed_pod_names.push(name)
                     unchanged_pod_names.delete(name)
@@ -42,11 +42,24 @@ module Pod
 
             changes[:changed] = changed_pod_names
             changes[:unchanged] = unchanged_pod_names
-            Pod::UI.puts("需要重编译的framework : #{changed_pod_names.to_s}") if config.verbose
+            Pod::UI.puts("Pre 需要重编译的framework : #{changed_pod_names.to_s}") if config.verbose
             @prebuild_pods_changes = Analyzer::SpecsState.new(changes)
             # save the chagnes info for later stage
             Pod::Prebuild::Passer.prebuild_pods_changes = @prebuild_pods_changes 
             @prebuild_pods_changes
+        end
+
+        # compare version 
+        #  1.2.0 == 1.2   => true
+        #  1.2.1 != 1.2.0 => false
+        def compare_version(first_version, second_version)
+            first_nums = first_version.split('.')
+            second_nums = second_version.split('.')
+
+            first_nums.pop until first_nums.last.to_i != 0
+            second_nums.pop until second_nums.last.to_i != 0
+
+            first_nums == second_nums
         end
        
 
@@ -57,19 +70,35 @@ module Pod
             changes = lockfile.detect_changes_with_podfile(podfile)
             unchanged_pod_names = changes[:unchanged]
             changed_pod_names = changes[:changed]
+            add_pod_names = changes[:added]
+            removed_pod_names = changes[:removed]
+
+
             unchanged_pod_names.reverse_each do |name|
                 mainfest_pod_version = lockfile.version(name).to_s
                 already_prebuild_version = prebuilded_framework_version(name) || "未找到"
-                if already_prebuild_version != mainfest_pod_version 
-                    Pod::UI.puts("- #{name} 已编译版本 #{already_prebuild_version}, manifest中的版本: #{mainfest_pod_version}") if config.verbose
+                if compare_version(mainfest_pod_version, already_prebuild_version)
+                    # 已经编译了
+                    removed_pod_names.delete(name) if removed_pod_names.include?(name)
+                    add_pod_names.delete(name) if add_pod_names.include?(name)
+                    changed_pod_names.delete(name) if changed_pod_names.include?(name)
+               
+                else
+                    # 未找到相对应的版本
+                    if already_prebuild_version == "99999.99999.99999"
+                        Pod::UI.puts("- #{name}: 未找到预编译文件, manifest中的版本: #{mainfest_pod_version}") if config.verbose
+                    else 
+                        Pod::UI.puts("- #{name}:  已编译版 #{already_prebuild_version}, manifest中的版本: #{mainfest_pod_version}") if config.verbose
+                    end
                     changed_pod_names = changed_pod_names.push(name)
-                    unchanged_pod_names.delete(name)
+                    unchanged_pod_names.delete(name) if unchanged_pod_names.include?(name)
                 end
             end
-
+            changes[:removed] = removed_pod_names
+            changes[:added] = add_pod_names
             changes[:changed] = changed_pod_names
             changes[:unchanged] = unchanged_pod_names
-            Pod::UI.puts("需要重编译的framework : #{changed_pod_names.to_s}") if config.verbose
+            Pod::UI.puts("post 需要重编译的framework : #{(changed_pod_names + removed_pod_names + add_pod_names ).to_a}") if config.verbose
             @prebuild_pods_changes = Analyzer::SpecsState.new(changes)
             # save the chagnes info for later stage
             Pod::Prebuild::Passer.prebuild_pods_changes = @prebuild_pods_changes 
@@ -101,7 +130,7 @@ module Pod
         # 当前已编译的framework的版本
         def prebuilded_framework_version(name)
             path = self.sandbox.plist_path_for_target_name(name)
-            framework_version = ""
+            framework_version = "99999.99999.99999"
             if Pathname.new(path).exist?
                 plist_file = CFPropertyList::List.new(:file => path) 
                 data = CFPropertyList.native_types(plist_file.value)
@@ -115,7 +144,33 @@ module Pod
         def install_when_cache_hit!
             # just print log
             self.sandbox.exsited_framework_target_names.each do |name|
-                UI.puts "Using #{name}"
+                UI.puts "Using #{name}" if config.verbose
+            end
+        end
+
+        def delete_standard_sand_box_pod(standard_sanbox)
+            if lockfile
+                changes = lockfile.detect_changes_with_podfile(podfile)
+                need_update_pods = (changes[:added] + changes[:changed] + changes[:removed]).to_a
+    
+                need_update_pods.each do |pod_name|
+                    pod_path = Pathname.new(standard_sanbox.root.to_s + "/#{pod_name}")
+                    Pod::UI.puts("删除 #{pod_path.to_s}") if config.verbose
+                    pod_path.rmtree if pod_path.exist?
+                end                
+            end
+        end
+
+        def delete_all_standard_sandbox_pod(standard_sanbox)
+            if lockfile
+                changes = lockfile.detect_changes_with_podfile(podfile)
+                need_update_pods = (changes[:added] + changes[:changed] + changes[:removed] + changes[:unchanged]).to_a
+    
+                need_update_pods.each do |pod_name|
+                    pod_path = Pathname.new(standard_sanbox.root.to_s + "/#{pod_name}")
+                    Pod::UI.puts("删除 #{pod_path.to_s}") if config.verbose
+                    pod_path.rmtree if pod_path.exist?
+                end                
             end
         end
     
@@ -163,8 +218,8 @@ module Pod
                 end.flatten
 
                 # add the dendencies
-                dependency_targets = targets.map {|t| t.recursive_dependent_targets }.flatten.uniq || []
-                targets = (targets + dependency_targets).uniq
+                # dependency_targets = targets.map {|t| t.recursive_dependent_targets }.flatten.uniq || []
+                # targets = (targets + dependency_targets).uniq
             else
                 targets = self.pod_targets
             end
@@ -255,10 +310,11 @@ module Pod
             useless_target_names = sandbox.exsited_framework_target_names.reject do |name| 
                 all_needed_names.include? name
             end
-            useless_target_names.each do |name|
-                path = sandbox.framework_folder_path_for_target_name(name)
-                path.rmtree if path.exist?
-            end
+            # 不删除已经编译好的framework
+            # useless_target_names.each do |name|
+            #     path = sandbox.framework_folder_path_for_target_name(name)
+            #     path.rmtree if path.exist?
+            # end
 
             if not Podfile::DSL.dont_remove_source_code 
                 # only keep manifest.lock and framework folder in _Prebuild

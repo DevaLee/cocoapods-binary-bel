@@ -2,6 +2,7 @@
 require_relative 'helper/podfile_options'
 require_relative 'tool/tool'
 require_relative 'gem_version'
+require_relative 'command_option/command_option'
 
 module Pod    
     class Podfile
@@ -11,6 +12,10 @@ module Pod
             # it has a lower priority to other binary settings
             def all_binary!
                 DSL.prebuild_all = true
+            end
+
+            def all_source!
+                DSL.framework_source_all = true
             end
 
             # Enable bitcode for prebuilt frameworks
@@ -59,6 +64,9 @@ module Pod
             private
             class_attr_accessor :prebuild_all
             prebuild_all = false
+
+            class_attr_accessor :framework_source_all
+            framework_source_all = false
 
             class_attr_accessor :bitcode_enabled
             bitcode_enabled = false
@@ -122,6 +130,9 @@ Pod::HooksManager.register('cocoapods-binary-bel', :pre_install) do |installer_c
     Pod::Installer.force_disable_integration true # don't integrate targets
     Pod::Config.force_disable_write_lockfile true # disbale write lock file for perbuild podfile
     Pod::Installer.disable_install_complete_message true # disable install complete message
+
+    Pod::Podfile::DSL.framework_source_all = Pod::Podfile::DSL.framework_source_all || Pod::Command::Install::all_use_source
+    Pod::UI.puts("全部使用源码") if Pod::Podfile::DSL.framework_source_all  
     
     # make another custom sandbox
     standard_sandbox = installer_context.sandbox
@@ -133,7 +144,9 @@ Pod::HooksManager.register('cocoapods-binary-bel', :pre_install) do |installer_c
     # install
     lockfile = installer_context.lockfile
     binary_installer = Pod::Installer.new(prebuild_sandbox, prebuild_podfile, lockfile)
-    
+
+    binary_installer.delete_all_standard_sandbox_pod(standard_sandbox)
+
     if binary_installer.have_exact_prebuild_cache? && !update
         binary_installer.install_when_cache_hit!
     else

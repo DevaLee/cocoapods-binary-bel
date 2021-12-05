@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-binary-bel (0.4.8)
+    cocoapods-binary-bel (0.5.1)
       CFPropertyList
       cocoapods
       fourflusher

@@ -28,13 +28,17 @@ module Pod
                 end
 
                 # patched content
-                should_prebuild = Pod::Podfile::DSL.prebuild_all
+                should_prebuild = Pod::Podfile::DSL.prebuild_all || (not Pod::Podfile::DSL.framework_source_all)
                 local = false
                 
                 options = args.last
                 if options.is_a?(Hash) and options[Pod::Prebuild.keyword] != nil
-                    should_prebuild = options[Pod::Prebuild.keyword]
+                    should_prebuild = options[Pod::Prebuild.keyword] && (not Pod::Podfile::DSL.framework_source_all)
                     local = (options[:path] != nil)
+                end
+
+                if Pod::Command::Install.all_use_source
+                    should_prebuild = false
                 end
                 
                 if should_prebuild and (not local)
