@@ -214,9 +214,12 @@ module Pod
                 # https://github.com/leavez/cocoapods-binary/issues/29
                 if spec.attributes_hash["resource_bundles"]
                     bundle_names = spec.attributes_hash["resource_bundles"].keys
-                    spec.attributes_hash["resource_bundles"] = nil 
-                    spec.attributes_hash["resources"] ||= []
-                    spec.attributes_hash["resources"] += bundle_names.map{|n| n+".bundle"}
+                    # 只对动态库处理，静态库由mainTarget处理resource_bundles,静态库不能清空resource_bundles
+                    if not targets.first.build_as_static_framework? 
+                        spec.attributes_hash["resource_bundles"] = nil 
+                        spec.attributes_hash["resources"] ||= []
+                        spec.attributes_hash["resources"] += bundle_names.map{|n| n+".bundle"}
+                    end
                 end
 
                 # to avoid the warning of missing license

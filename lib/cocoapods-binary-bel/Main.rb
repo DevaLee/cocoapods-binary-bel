@@ -145,8 +145,6 @@ Pod::HooksManager.register('cocoapods-binary-bel', :pre_install) do |installer_c
     lockfile = installer_context.lockfile
     binary_installer = Pod::Installer.new(prebuild_sandbox, prebuild_podfile, lockfile)
 
-    binary_installer.delete_all_standard_sandbox_pod(standard_sandbox)
-
     if binary_installer.have_exact_prebuild_cache? && !update
         binary_installer.install_when_cache_hit!
     else
@@ -154,6 +152,8 @@ Pod::HooksManager.register('cocoapods-binary-bel', :pre_install) do |installer_c
         binary_installer.repo_update = repo_update
         binary_installer.install!
     end
+
+    binary_installer.delete_all_standard_sandbox_pod(standard_sandbox)
     
     
     # reset the environment

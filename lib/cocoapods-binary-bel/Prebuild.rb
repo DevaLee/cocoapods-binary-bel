@@ -146,6 +146,14 @@ module Pod
             self.sandbox.exsited_framework_target_names.each do |name|
                 UI.puts "Using #{name}" if config.verbose
             end
+
+            self.sandbox
+             #处理静态库resources 资源文件
+            self.resolve_dependencies
+            self.download_dependencies
+           
+            self.handle_static_framework_resouces
+            
         end
 
         def delete_standard_sand_box_pod(standard_sanbox)
@@ -171,6 +179,43 @@ module Pod
                     Pod::UI.puts("删除 #{pod_path.to_s}") if config.verbose
                     pod_path.rmtree if pod_path.exist?
                 end                
+            end
+        end
+        # 处理静态库资源
+        def handle_static_framework_resouces
+            all_static_framework_targets = pod_targets.reject{|pod_target| not pod_target.static_framework? or pod_target.resource_paths.empty? }
+            all_static_framework_targets.each do |target|        
+                output_path = sandbox.framework_folder_path_for_target_name(target.name)
+                if target.static_framework? and !target.resource_paths.empty?
+                    framework_path = output_path + target.framework_name
+                    standard_sandbox_path = sandbox.standard_sanbox_path
+                    resources = begin
+                        if Pod::VERSION.start_with? "1.5"
+                            target.resource_paths
+                        else
+                            # resource_paths is Hash{String=>Array<String>} on 1.6 and above
+                            # (use AFNetworking to generate a demo data)
+                            # https://github.com/leavez/cocoapods-binary/issues/50
+                            target.resource_paths.values.flatten
+                        end
+                    end
+                    raise "Wrong type: #{resources}" unless resources.kind_of? Array
+
+                    path_objects = resources.map do |path|
+                        prebuild_real_path = (path.gsub('${PODS_ROOT}', sandbox.root.to_s) if path.start_with? '${PODS_ROOT}')|| ""
+                        real_file_path = framework_path + File.basename(path)
+                        if Pathname.new(prebuild_real_path).exist? and not Pathname.new(real_file_path).exist?
+                            # 静态库的resource,拷贝至framework目录下
+                            FileUtils.cp_r(prebuild_real_path, real_file_path, :remove_destination => true)
+                        end
+                        object = Prebuild::Passer::ResourcePath.new
+                        object.real_file_path = real_file_path
+                        object.target_file_path = path.gsub('${PODS_ROOT}', standard_sandbox_path.to_s) if path.start_with? '${PODS_ROOT}'
+                        object.target_file_path = path.gsub("${PODS_CONFIGURATION_BUILD_DIR}", standard_sandbox_path.to_s) if path.start_with? "${PODS_CONFIGURATION_BUILD_DIR}"
+                        object
+                    end
+                    Prebuild::Passer.resources_to_copy_for_static_framework[target.name] = path_objects
+                end
             end
         end
     
@@ -226,7 +271,6 @@ module Pod
 
             targets = targets.reject {|pod_target| sandbox.local?(pod_target.pod_name) }
 
-            
             # build!
             Pod::UI.puts "Prebuild frameworks (total #{targets.count})"
             Pod::Prebuild.remove_build_dir(sandbox_path)
@@ -240,36 +284,12 @@ module Pod
                 output_path.rmtree if output_path.exist?
                 output_path.mkpath unless output_path.exist?
                 Pod::Prebuild.build(sandbox_path, target, output_path, bitcode_enabled,  Podfile::DSL.custom_build_options,  Podfile::DSL.custom_build_options_simulator)
-
-                # save the resource paths for later installing
-                if target.static_framework? and !target.resource_paths.empty?
-                    framework_path = output_path + target.framework_name
-                    standard_sandbox_path = sandbox.standard_sanbox_path
-
-                    resources = begin
-                        if Pod::VERSION.start_with? "1.5"
-                            target.resource_paths
-                        else
-                            # resource_paths is Hash{String=>Array<String>} on 1.6 and above
-                            # (use AFNetworking to generate a demo data)
-                            # https://github.com/leavez/cocoapods-binary/issues/50
-                            target.resource_paths.values.flatten
-                        end
-                    end
-                    raise "Wrong type: #{resources}" unless resources.kind_of? Array
-
-                    path_objects = resources.map do |path|
-                        object = Prebuild::Passer::ResourcePath.new
-                        object.real_file_path = framework_path + File.basename(path)
-                        object.target_file_path = path.gsub('${PODS_ROOT}', standard_sandbox_path.to_s) if path.start_with? '${PODS_ROOT}'
-                        object.target_file_path = path.gsub("${PODS_CONFIGURATION_BUILD_DIR}", standard_sandbox_path.to_s) if path.start_with? "${PODS_CONFIGURATION_BUILD_DIR}"
-                        object
-                    end
-                    Prebuild::Passer.resources_to_copy_for_static_framework[target.name] = path_objects
-                end
-
-            end            
+            end
+            # check static_framework resources
+            self.handle_static_framework_resouces
             Pod::Prebuild.remove_build_dir(sandbox_path)
+
+      
 
 
             # copy vendored libraries and frameworks
@@ -323,6 +343,7 @@ module Pod
                     filename = File.basename(file)
                     not to_remain_files.include?(filename)
                 end
+
                 to_delete_files.each do |path|
                     path.rmtree if path.exist?
                 end
